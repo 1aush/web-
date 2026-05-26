@@ -9,6 +9,8 @@
 
   <ItemGroup>
     <Compile Remove="WinFormsApp1\**\*.cs" />
+    <Compile Remove="NetTask\**\*.cs" />
+    <Compile Remove="MigratePasswordsTool\**\*.cs" />
   </ItemGroup>
 
   <ItemGroup>
