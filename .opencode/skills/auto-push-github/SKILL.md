@@ -1,6 +1,6 @@
 ---
 name: auto-push-github
-description: Use when the user wants to update the project, commit changes, and push to GitHub automatically. Also updates README.md with the latest update time.
+description: Use when the user wants to update the project and commit changes. Automatically updates README.md and asks whether to push to GitHub after commit.
 ---
 
 # Auto Push GitHub Skill
@@ -65,7 +65,21 @@ Types:
 git commit -m "生成的提交信息"
 ```
 
-### 6. Push to GitHub
+### 6. Ask to Push to GitHub
+
+After successful commit, use the `question` tool to ask the user:
+
+```
+是否推送到GitHub？
+```
+
+Options:
+- "是，立即推送" - Push to GitHub now
+- "否，稍后再说" - Skip pushing
+
+### 7. Push to GitHub (if user confirms)
+
+If the user chooses to push:
 
 ```bash
 git push origin master
@@ -80,14 +94,24 @@ Get current branch with: `git branch --show-current`
 - If `git push` fails due to remote changes, run `git pull --rebase origin master` first, then retry push
 - If merge conflicts occur during pull, inform the user and stop for manual resolution
 - If README.md doesn't contain the "最后更新" pattern, add it at the end of the file before the final `---`
+- If user declines to push, confirm that changes are committed locally
 
 ## Example Output
 
-After successful execution, report to the user:
+After successful execution (with push confirmed):
 
 ```
 ✅ 项目更新完成！
 - 提交信息: [生成的提交信息]
 - 已推送到 GitHub
+- README.md 已更新: 最后更新 2026-05-26
+```
+
+After successful execution (with push declined):
+
+```
+✅ 项目更新完成！
+- 提交信息: [生成的提交信息]
+- 更改已提交到本地（未推送到GitHub）
 - README.md 已更新: 最后更新 2026-05-26
 ```
